@@ -22,7 +22,7 @@
   <% projects.forEach(function(p) { %>
   <div class="project-card reveal" style="cursor:default">
     <div class="project-card-img">
-      <div class="project-card-img-bg" style="background:<%= p.imgGrad %>"></div>
+      <%- include('partials/img-or-grad', { item: p, altText: p.title, cssClass: 'project-card-img-bg' }) %>
       <div class="project-card-overlay">
         <div class="project-card-cat"><%= p.category %></div>
         <div class="project-card-title"><%= p.title %></div>

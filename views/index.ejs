@@ -46,7 +46,7 @@
 
     <div class="step-card" onclick="toggle(this)">
       <div class="card-img">
-        <div class="card-img-bg" style="background:<%= s.imgGrad %>"></div>
+        <%- include('partials/img-or-grad', { item: s, altText: s.title, cssClass: 'card-img-bg' }) %>
         <div class="card-img-overlay">
           <div class="card-img-num"><%= s.num %></div>
           <div class="card-img-title"><%= s.title %></div>

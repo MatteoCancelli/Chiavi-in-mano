@@ -11,7 +11,7 @@
 
   <!-- Immagine hero -->
   <div class="service-hero-img">
-    <div class="service-hero-img-bg" style="background:<%= step.imgGrad %>"></div>
+    <%- include('../partials/img-or-grad', { item: step, altText: step.title, cssClass: 'service-hero-img-bg' }) %>
   </div>
 
   <!-- Meta -->
@@ -52,7 +52,7 @@
     <% relatedProjects.forEach(function(p) { %>
     <a href="/progetti?categoria=<%= encodeURIComponent(p.category) %>" class="project-card reveal">
       <div class="project-card-img">
-        <div class="project-card-img-bg" style="background:<%= p.imgGrad %>"></div>
+        <%- include('../partials/img-or-grad', { item: p, altText: p.title, cssClass: 'project-card-img-bg' }) %>
         <div class="project-card-overlay">
           <div class="project-card-cat"><%= p.category %></div>
           <div class="project-card-title"><%= p.title %></div>
