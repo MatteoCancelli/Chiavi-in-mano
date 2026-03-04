@@ -6,7 +6,6 @@ if (navToggle && navLinks) {
     navToggle.classList.toggle('open');
     navLinks.classList.toggle('open');
   });
-  // chiudi al click su un link
   navLinks.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => {
       navToggle.classList.remove('open');
@@ -47,21 +46,25 @@ document.querySelectorAll('.reveal').forEach(el => revealAll.observe(el));
 
     const outerRect = outer.getBoundingClientRect();
     const outerTop  = outerRect.top + window.scrollY;
-    const W = outerRect.width;
-    const H = outer.scrollHeight;
-    const cx  = W / 2;
-    const amp = 58;
+    const W  = outerRect.width;
+    const H  = outer.scrollHeight;
+    const cx = W / 2;   // centro fisso del contenitore
+    const amp = 58;     // ampiezza oscillazione
 
-    const dots   = outer.querySelectorAll('.step-dot');
+    const dots = outer.querySelectorAll('.step-dot');
     const points = [];
+
     dots.forEach((dot, i) => {
       const r = dot.getBoundingClientRect();
       const y = (r.top + window.scrollY) + r.height / 2 - outerTop;
+      // X calcolata dal centro del contenitore, non dalla posizione del dot
       const x = (i % 2 === 0) ? cx - amp : cx + amp;
       points.push({ x, y });
     });
+
     if (points.length < 2) return;
 
+    /* costruisce il path SVG */
     let d = `M ${points[0].x} ${points[0].y}`;
     for (let i = 1; i < points.length; i++) {
       const p = points[i - 1], c = points[i];
@@ -83,12 +86,18 @@ document.querySelectorAll('.reveal').forEach(el => revealAll.observe(el));
       <path d="${d}" fill="none" stroke="url(#lg)" stroke-width="2.8"
             stroke-linecap="round" stroke-dasharray="10 6" opacity=".75"/>`;
 
-    /* allinea i dot alla x della curva */
+    /*
+      Invece di spostare il col con translateX (impreciso al resize),
+      posizioniamo ogni dot-col in modo assoluto rispetto al contenitore.
+      Il col diventa position:absolute con left calcolato dalla x della curva.
+    */
     dots.forEach((dot, i) => {
       const col = dot.closest('.step-dot-col');
-      const colRect   = col.getBoundingClientRect();
-      const colCenterX = colRect.left - outerRect.left + colRect.width / 2;
-      col.style.transform = `translateX(${points[i].x - colCenterX}px)`;
+      // reset transform precedente
+      col.style.transform = '';
+      // posiziona in assoluto centrato sulla x della curva
+      col.style.position = 'absolute';
+      col.style.left = `${points[i].x - col.offsetWidth / 2}px`;
     });
   }
 
