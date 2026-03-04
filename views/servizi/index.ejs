@@ -7,27 +7,42 @@
   <p>12 fasi integrate. Un unico responsabile. Puoi entrare in qualsiasi punto del percorso.</p>
 </div>
 
-<div class="services-grid">
+<!-- FILTER CATEGORIE -->
+<div class="filter-bar" id="catFilter">
+  <button class="filter-btn active" data-filter="all">Tutti</button>
+  <% const cats = [...new Set(steps.map(s => s.category))]; %>
+  <% cats.forEach(function(cat) { %>
+  <button class="filter-btn" data-filter="<%= cat %>"><%= cat %></button>
+  <% }) %>
+</div>
+
+<!-- SERVICES COMPACT GRID -->
+<div class="svc-grid" id="svcGrid">
   <% steps.forEach(function(s) { %>
-  <a href="/servizi/<%= s.slug %>" class="service-card reveal">
-    <div class="service-card-img">
-      <div class="service-card-img-bg" style="background:<%= s.imgGrad %>"></div>
-      <div class="service-card-overlay">
-        <div class="service-card-num"><%= s.num %></div>
+  <a href="/servizi/<%= s.slug %>" class="svc-item reveal" data-category="<%= s.category %>">
+
+    <div class="svc-icon-wrap" style="background:<%= s.iconBg %>">
+      <span class="svc-icon-emoji"><%= s.icon %></span>
+      <span class="svc-num"><%= s.num %></span>
+    </div>
+
+    <div class="svc-content">
+      <div class="svc-header">
+        <span class="svc-category"><%= s.category %></span>
+        <% if (s.startHere) { %>
+        <span class="svc-start-badge">Puoi iniziare qui</span>
+        <% } %>
       </div>
+      <h3 class="svc-title"><%= s.title %></h3>
+      <p class="svc-desc"><%= s.shortDesc %></p>
     </div>
-    <div class="service-card-body">
-      <div class="service-card-icon" style="background:<%= s.iconBg %>"><%= s.icon %></div>
-      <div class="service-card-title"><%= s.title %></div>
-      <p class="service-card-desc"><%= s.shortDesc %></p>
-      <% if (s.startHere) { %>
-      <span class="service-card-start">Puoi iniziare qui</span>
-      <% } %>
+
+    <div class="svc-arrow">
+      <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 8h10M9 4l4 4-4 4"/>
+      </svg>
     </div>
-    <div class="service-card-arrow">
-      Scopri
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-    </div>
+
   </a>
   <% }) %>
 </div>
@@ -42,3 +57,21 @@
 </section>
 
 <%- include('../partials/footer') %>
+
+<script>
+/* filtro categorie lato client — nessun reload di pagina */
+const filterBtns = document.querySelectorAll('#catFilter .filter-btn');
+const svcItems   = document.querySelectorAll('#svcGrid .svc-item');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    svcItems.forEach(item => {
+      const show = f === 'all' || item.dataset.category === f;
+      item.style.display = show ? '' : 'none';
+    });
+  });
+});
+</script>

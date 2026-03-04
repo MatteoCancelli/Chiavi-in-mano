@@ -411,7 +411,100 @@ em { font-style: italic; color: var(--warm); }
   font-size: 1rem; color: rgba(255,255,255,.5); line-height: 1.65;
 }
 
-/* ─── SERVICES GRID ─────────────────────────────────────────────────── */
+/* ─── SERVICES COMPACT GRID ─────────────────────────────────────────── */
+.svc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 2px;
+  max-width: 1040px;
+  margin: 40px auto 80px;
+  padding: 0 24px;
+}
+
+.svc-item {
+  display: flex; align-items: center; gap: 20px;
+  padding: 22px 24px;
+  background: #fff;
+  border: 1px solid rgba(200,169,110,.14);
+  text-decoration: none; color: var(--ink);
+  transition: background .2s, transform .2s;
+  position: relative;
+}
+.svc-item:hover {
+  background: var(--cream);
+  z-index: 1;
+  transform: scale(1.01);
+  box-shadow: 0 4px 24px rgba(26,24,21,.09);
+}
+
+/* icona */
+.svc-icon-wrap {
+  flex-shrink: 0;
+  width: 60px; height: 60px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.svc-icon-emoji { font-size: 1.6rem; line-height: 1; }
+.svc-num {
+  position: absolute; bottom: -4px; right: -4px;
+  font-family: 'Playfair Display', serif;
+  font-size: 0.65rem; font-weight: 700;
+  background: var(--ink); color: var(--warm);
+  width: 18px; height: 18px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  letter-spacing: 0;
+}
+
+/* contenuto */
+.svc-content { flex: 1; min-width: 0; }
+.svc-header {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 5px; flex-wrap: wrap;
+}
+.svc-category {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(26,24,21,.38);
+}
+.svc-start-badge {
+  font-size: 0.63rem; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: #fff;
+  background: var(--clay); padding: 2px 7px; border-radius: 10px;
+}
+.svc-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; font-weight: 700; margin-bottom: 4px;
+}
+.svc-desc {
+  font-size: 0.8rem; color: rgba(26,24,21,.5);
+  line-height: 1.5;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* freccia */
+.svc-arrow {
+  flex-shrink: 0; color: rgba(26,24,21,.2);
+  transition: color .2s, transform .2s;
+}
+.svc-item:hover .svc-arrow {
+  color: var(--warm); transform: translateX(4px);
+}
+
+/* bordi arrotondati agli angoli della griglia */
+.svc-item:first-child { border-radius: var(--radius) 0 0 0; }
+.svc-item:nth-child(2) { border-radius: 0 var(--radius) 0 0; }
+.svc-item:nth-last-child(1) { border-radius: 0 0 var(--radius) var(--radius); }
+.svc-item:nth-last-child(2) { border-radius: 0 0 0 var(--radius); }
+
+@media (max-width: 680px) {
+  .svc-grid { grid-template-columns: 1fr; padding: 0 16px; gap: 2px; }
+  .svc-item:first-child  { border-radius: var(--radius) var(--radius) 0 0; }
+  .svc-item:nth-child(2) { border-radius: 0; }
+  .svc-item:nth-last-child(1) { border-radius: 0 0 var(--radius) var(--radius); }
+  .svc-item:nth-last-child(2) { border-radius: 0; }
+  .svc-desc { white-space: normal; }
+}
+
+/* ─── SERVICES GRID (vecchio, usato altrove) ─────────────────────────── */
 .services-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 22px; max-width: 1040px; margin: 60px auto; padding: 0 24px;
