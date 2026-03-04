@@ -1,0 +1,90 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<div class="page-header">
+  <span class="tag">Contatti</span>
+  <h1>Parliamo del<br><em>tuo progetto</em></h1>
+  <p>Compila il modulo o scrivici direttamente. Ti risponderemo entro 24 ore.</p>
+</div>
+
+<div class="contatti-wrap">
+
+  <!-- INFO -->
+  <div class="contatti-info">
+    <h2>Dove <em>siamo</em></h2>
+    <p>Operiamo in tutto il territorio bresciano e in provincia. Il primo sopralluogo è gratuito e senza impegno.</p>
+
+    <div class="contatti-detail">
+      <div class="contatti-item reveal">
+        <div class="contatti-item-icon">📍</div>
+        <div>
+          <div class="contatti-item-label">Sede</div>
+          <div class="contatti-item-val">Via [Da inserire], Brescia (BS)</div>
+        </div>
+      </div>
+      <div class="contatti-item reveal">
+        <div class="contatti-item-icon">📞</div>
+        <div>
+          <div class="contatti-item-label">Telefono</div>
+          <div class="contatti-item-val"><a href="tel:+390000000000">+39 000 000 0000</a></div>
+        </div>
+      </div>
+      <div class="contatti-item reveal">
+        <div class="contatti-item-icon">✉️</div>
+        <div>
+          <div class="contatti-item-label">Email</div>
+          <div class="contatti-item-val"><a href="mailto:info@inbb.it">info@inbb.it</a></div>
+        </div>
+      </div>
+      <div class="contatti-item reveal">
+        <div class="contatti-item-icon">🕐</div>
+        <div>
+          <div class="contatti-item-label">Orari</div>
+          <div class="contatti-item-val">Lun–Ven 8:00–18:00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div class="contact-form-box reveal">
+    <form action="/contatti" method="POST" id="contactForm">
+      <div class="form-group">
+        <label for="nome">Nome e cognome</label>
+        <input type="text" id="nome" name="nome" placeholder="Mario Rossi" required/>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="mario@esempio.it" required/>
+      </div>
+      <div class="form-group">
+        <label for="telefono">Telefono</label>
+        <input type="tel" id="telefono" name="telefono" placeholder="+39 333 000 0000"/>
+      </div>
+      <div class="form-group">
+        <label for="servizio">Servizio di interesse</label>
+        <select id="servizio" name="servizio">
+          <option value="">— Seleziona —</option>
+          <option value="costruzione">Costruzione ex novo</option>
+          <option value="ristrutturazione">Ristrutturazione</option>
+          <option value="impianti">Impianti</option>
+          <option value="efficienza-energetica">Efficienza energetica</option>
+          <option value="finiture">Finiture & pavimentazioni</option>
+          <option value="altro">Altro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="messaggio">Descrivi il progetto</label>
+        <textarea id="messaggio" name="messaggio" placeholder="Raccontaci brevemente cosa hai in mente..." required></textarea>
+      </div>
+      <button type="submit" class="btn-primary" style="width:100%;justify-content:center;margin-top:8px">
+        Invia richiesta
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+      <p class="form-note">I tuoi dati non verranno condivisi con terze parti. Risposta garantita entro 24 ore lavorative.</p>
+    </form>
+  </div>
+
+</div>
+
+<%- include('partials/footer') %>

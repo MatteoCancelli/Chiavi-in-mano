@@ -1,0 +1,126 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">In B. &amp; B. S.r.l · Edilizia</div>
+  <h1>Costruiamo<br><em>Chiavi in Mano</em></h1>
+  <p class="hero-sub">Dalla prima idea alla consegna finale. Un percorso chiaro, senza sorprese, con un interlocutore unico per ogni fase del lavoro.</p>
+  <a href="#timeline" class="hero-cta">
+    Scopri il percorso
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+  </a>
+</section>
+
+<!-- STAT STRIP -->
+<div class="intro-strip">
+  <div class="stat"><div class="stat-num">12</div><div class="stat-label">Fasi del progetto</div></div>
+  <div class="stat"><div class="stat-num">1</div><div class="stat-label">Interlocutore</div></div>
+  <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Chiavi in mano</div></div>
+  <div class="stat"><div class="stat-num">0</div><div class="stat-label">Sorprese</div></div>
+</div>
+
+<!-- SECTION TITLE -->
+<div class="section-title" id="timeline">
+  <div class="tag">Il percorso</div>
+  <h2>Ogni progetto, ogni passo</h2>
+  <p>Puoi partire dall'inizio — costruzione ex novo — oppure entrare in qualsiasi fase intermedia. Clicca su uno step per i dettagli.</p>
+</div>
+
+<!-- TIMELINE -->
+<div class="timeline-outer" id="timelineOuter">
+  <svg id="timelineSvg" aria-hidden="true"></svg>
+
+  <% steps.forEach(function(s, i) { %>
+  <%   const side = i % 2 === 0 ? 'side-left' : 'side-right'; %>
+  <div class="step <%= side %>" data-index="<%= i %>">
+    <div class="step-spacer"></div>
+
+    <div class="step-dot-col">
+      <div class="step-dot"
+           style="background:<%= s.dotColor %>;box-shadow:0 0 0 3px <%= s.dotColor %>,0 4px 16px rgba(0,0,0,.2)">
+      </div>
+    </div>
+
+    <div class="step-gutter"></div>
+
+    <div class="step-card" onclick="toggle(this)">
+      <div class="card-img">
+        <div class="card-img-bg" style="background:<%= s.imgGrad %>"></div>
+        <div class="card-img-overlay">
+          <div class="card-img-num"><%= s.num %></div>
+          <div class="card-img-title"><%= s.title %></div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="card-head-row">
+          <div class="card-icon" style="background:<%= s.iconBg %>"><%= s.icon %></div>
+          <div>
+            <div class="card-step-label">Step <%= s.num %></div>
+            <div class="card-title"><%= s.title %></div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 7l5 5 5-5"/>
+          </svg>
+        </div>
+
+        <% if (s.startHere) { %>
+        <div class="start-badge">
+          <svg viewBox="0 0 10 10" fill="currentColor"><polygon points="5,0 10,10 0,10"/></svg>
+          Puoi iniziare qui
+        </div>
+        <% } %>
+
+        <div class="card-collapse">
+          <p class="card-desc"><%= s.desc %></p>
+          <div class="card-tags">
+            <% s.tags.forEach(function(t) { %>
+            <span class="card-tag"><%= t %></span>
+            <% }) %>
+          </div>
+          <a href="/servizi/<%= s.slug %>" class="card-link" onclick="event.stopPropagation()">
+            Dettagli & contatto
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% }) %>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="section-title">
+    <div class="tag">Dicono di noi</div>
+    <h2>Clienti soddisfatti</h2>
+    <p>Ogni progetto è una storia. Eccone alcune.</p>
+  </div>
+
+  <div class="testimonials-grid">
+    <% testimonials.forEach(function(t) { %>
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars"><%= '★'.repeat(t.rating) %></div>
+      <p class="testimonial-text">"<%= t.text %>"</p>
+      <div class="testimonial-author">
+        <span class="testimonial-name"><%= t.name %></span>
+        <span class="testimonial-role"><%= t.role %></span>
+        <span class="testimonial-service"><%= t.service %></span>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="bottom-cta">
+  <h2>Pronto a iniziare<br><em>il tuo progetto?</em></h2>
+  <p>Prenota una consulenza gratuita. Ti daremo un preventivo trasparente e un piano dettagliato entro 48 ore.</p>
+  <a href="/contatti" class="btn-primary">
+    Consulenza gratuita
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+  </a>
+</section>
+
+<%- include('partials/footer') %>

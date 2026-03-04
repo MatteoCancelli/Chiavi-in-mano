@@ -1,0 +1,44 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+
+<div class="page-header">
+  <span class="tag">I nostri servizi</span>
+  <h1>Dal progetto<br><em>alla consegna</em></h1>
+  <p>12 fasi integrate. Un unico responsabile. Puoi entrare in qualsiasi punto del percorso.</p>
+</div>
+
+<div class="services-grid">
+  <% steps.forEach(function(s) { %>
+  <a href="/servizi/<%= s.slug %>" class="service-card reveal">
+    <div class="service-card-img">
+      <div class="service-card-img-bg" style="background:<%= s.imgGrad %>"></div>
+      <div class="service-card-overlay">
+        <div class="service-card-num"><%= s.num %></div>
+      </div>
+    </div>
+    <div class="service-card-body">
+      <div class="service-card-icon" style="background:<%= s.iconBg %>"><%= s.icon %></div>
+      <div class="service-card-title"><%= s.title %></div>
+      <p class="service-card-desc"><%= s.shortDesc %></p>
+      <% if (s.startHere) { %>
+      <span class="service-card-start">Puoi iniziare qui</span>
+      <% } %>
+    </div>
+    <div class="service-card-arrow">
+      Scopri
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+    </div>
+  </a>
+  <% }) %>
+</div>
+
+<section class="bottom-cta">
+  <h2>Non sai da dove<br><em>iniziare?</em></h2>
+  <p>Raccontaci il tuo progetto. Ti guidiamo noi verso la fase giusta, senza impegno.</p>
+  <a href="/contatti" class="btn-primary">
+    Parla con noi
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+  </a>
+</section>
+
+<%- include('../partials/footer') %>

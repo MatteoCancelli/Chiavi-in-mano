@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chiavi in Mano — Edilizia</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ─── RESET & VARS ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#f4f0eb;--ink:#1a1815;--warm:#c8a96e;--warm-lt:#e8dcc8;
+  --clay:#b5724a;--sage:#7a8f6e;--sky:#6a8fa3;--blush:#c47a6e;--plum:#7a5f7e;
+  --radius:14px;--dot-size:24px;--gutter:32px;/* spazio dot ↔ card */
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;overflow-x:hidden}
+
+/* ════════════ HERO ════════════ */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;background:var(--ink);overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 30% 70%,rgba(200,169,110,.13) 0%,transparent 70%),radial-gradient(ellipse 60% 50% at 75% 30%,rgba(122,143,110,.09) 0%,transparent 70%)}
+.hero-label{position:relative;font-size:.76rem;letter-spacing:.28em;text-transform:uppercase;color:var(--warm);margin-bottom:20px;opacity:0;animation:fadeUp .8s .2s forwards}
+.hero h1{position:relative;font-family:'Playfair Display',serif;font-size:clamp(2.8rem,7vw,5.6rem);font-weight:400;color:#fff;line-height:1.08;opacity:0;animation:fadeUp .9s .35s forwards}
+.hero h1 em{font-style:italic;color:var(--warm)}
+.hero-sub{position:relative;max-width:520px;margin-top:28px;font-size:1.05rem;font-weight:300;color:rgba(255,255,255,.52);line-height:1.6;opacity:0;animation:fadeUp .9s .5s forwards}
+.hero-cta{position:relative;margin-top:44px;display:inline-flex;align-items:center;gap:10px;padding:14px 32px;border:1.5px solid var(--warm);border-radius:40px;color:var(--warm);font-size:.9rem;font-weight:500;letter-spacing:.08em;text-decoration:none;opacity:0;animation:fadeUp .9s .65s forwards;transition:background .3s,color .3s}
+.hero-cta:hover{background:var(--warm);color:var(--ink)}
+.hero-cta svg{width:16px;height:16px;transition:transform .3s}
+.hero-cta:hover svg{transform:translateX(4px)}
+
+/* ════════════ STAT STRIP ════════════ */
+.intro-strip{display:flex;justify-content:center;gap:48px;flex-wrap:wrap;padding:48px 24px;background:#fff;border-bottom:1px solid var(--warm-lt)}
+.stat{text-align:center}
+.stat-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--ink)}
+.stat-label{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(26,24,21,.42);margin-top:4px}
+
+/* ════════════ SECTION TITLE ════════════ */
+.section-title{text-align:center;padding:80px 24px 16px}
+.section-title .tag{font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--warm)}
+.section-title h2{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,4vw,2.7rem);font-weight:400;margin-top:10px}
+.section-title p{max-width:540px;margin:16px auto 0;font-size:.94rem;color:rgba(26,24,21,.5);line-height:1.65}
+
+/* ════════════ TIMELINE OUTER ════════════ */
+.timeline-outer{
+  position:relative;
+  width:100%;
+  max-width:960px;
+  margin:48px auto 0;
+  padding:0 24px 100px;
+}
+
+/* ── SVG line (position:absolute, drawn by JS) ── */
+#timelineSvg{
+  position:absolute;
+  top:0;left:0;
+  width:100%;height:100%;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ════════════ STEP ROW ════════════ */
+/*
+  Desktop layout:
+    odd  → [card | dot]   card a sinistra
+    even → [dot | card]   card a destra
+  La colonna dei dot resta SEMPRE al centro dell'outer via un calcolo JS
+  La curva SVG oscilla tra i dot come un serpente.
+*/
+.step{
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:stretch;
+  margin-bottom:48px;
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity .55s cubic-bezier(.22,.6,.3,1),transform .55s cubic-bezier(.22,.6,.3,1);
+}
+.step.visible{opacity:1;transform:translateY(0)}
+
+/* odd: card | dot | spazio   → card a SX */
+.step.side-left  {flex-direction:row}
+/* even: spazio | dot | card  → card a DX */
+.step.side-right {flex-direction:row-reverse}
+
+/* ── spacer filler (riempie il lato vuoto) ── */
+.step-spacer{flex:1;min-width:0}
+
+/* ── dot column ── */
+.step-dot-col{
+  flex-shrink:0;
+  width:var(--dot-size);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding-top:22px;
+  position:relative;
+  z-index:2;
+}
+.step-dot{
+  width:var(--dot-size);
+  height:var(--dot-size);
+  border-radius:50%;
+  border:3px solid #fff;
+  box-shadow:0 0 0 3px var(--warm),0 4px 16px rgba(0,0,0,.2);
+  background:var(--warm);
+  cursor:pointer;
+  transition:transform .25s,box-shadow .25s;
+  position:relative;
+  z-index:2;
+}
+.step-dot:hover{transform:scale(1.15);box-shadow:0 0 0 4px var(--warm),0 6px 22px rgba(0,0,0,.28)}
+
+/* ── gutter tra dot e card ── */
+.step-gutter{flex-shrink:0;width:var(--gutter)}
+
+/* ════════════ STEP CARD ════════════ */
+.step-card{
+  flex:1;
+  max-width:400px;
+  background:#fff;
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:0 2px 22px rgba(26,24,21,.07);
+  border:1px solid rgba(200,169,110,.18);
+  cursor:pointer;
+  transition:box-shadow .3s,transform .3s;
+}
+.step-card:hover{box-shadow:0 8px 34px rgba(26,24,21,.14);transform:translateY(-3px)}
+
+/* ── immagine placeholder ── */
+.card-img{
+  position:relative;
+  width:100%;
+  height:160px;
+  overflow:hidden;
+}
+.card-img-bg{
+  width:100%;height:100%;
+  transition:transform .5s cubic-bezier(.2,.6,.3,1);
+}
+.step-card:hover .card-img-bg{transform:scale(1.04)}
+
+/* overlay sul'immagine: numero grande + titolo */
+.card-img-overlay{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:20px;
+  background:linear-gradient(to top,rgba(26,24,21,.72) 0%,transparent 60%);
+}
+.card-img-num{
+  font-family:'Playfair Display',serif;
+  font-size:2.4rem;font-weight:700;
+  color:rgba(255,255,255,.18);
+  line-height:1;position:absolute;top:14px;right:18px;
+}
+.card-img-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.15rem;font-weight:700;color:#fff;
+}
+
+/* ── corpo della card ── */
+.card-body{padding:20px 22px 18px}
+
+.card-head-row{display:flex;align-items:center;gap:12px}
+.card-icon{
+  width:38px;height:38px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;flex-shrink:0;
+}
+.card-step-label{font-size:.72rem;letter-spacing:.1em;color:rgba(26,24,21,.38);text-transform:uppercase}
+.card-title{font-family:'Playfair Display',serif;font-size:1.08rem;font-weight:700;color:var(--ink)}
+
+/* chevron */
+.card-chevron{width:20px;height:20px;margin-left:auto;flex-shrink:0;color:rgba(26,24,21,.3);transition:transform .35s}
+.step-card.open .card-chevron{transform:rotate(180deg)}
+
+/* badge "inizia qui" */
+.start-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:#fff;background:var(--clay);padding:4px 10px;border-radius:18px;margin-top:10px;
+}
+.start-badge svg{width:10px;height:10px}
+
+/* ── collapsibile ── */
+.card-collapse{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1)}
+.step-card.open .card-collapse{max-height:320px}
+
+.card-desc{
+  margin-top:14px;font-size:.88rem;color:rgba(26,24,21,.55);line-height:1.6;
+  padding-top:14px;border-top:1px solid var(--warm-lt);
+}
+.card-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
+.card-tag{font-size:.7rem;font-weight:500;letter-spacing:.05em;padding:3px 9px;border-radius:16px;background:var(--warm-lt);color:rgba(26,24,21,.58)}
+.card-link{
+  display:inline-flex;align-items:center;gap:5px;margin-top:14px;
+  font-size:.8rem;font-weight:500;color:var(--warm);text-decoration:none;letter-spacing:.04em;
+  transition:gap .25s;
+}
+.card-link:hover{gap:9px}
+.card-link svg{width:13px;height:13px}
+
+/* ════════════ BOTTOM CTA ════════════ */
+.bottom-cta{text-align:center;padding:80px 24px 100px;background:var(--ink);position:relative;overflow:hidden}
+.bottom-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 80%,rgba(200,169,110,.1) 0%,transparent 70%)}
+.bottom-cta h2{position:relative;font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.5rem);color:#fff;font-weight:400}
+.bottom-cta h2 em{font-style:italic;color:var(--warm)}
+.bottom-cta p{position:relative;color:rgba(255,255,255,.45);max-width:460px;margin:16px auto 0;font-size:.94rem;line-height:1.6}
+.btn-primary{
+  position:relative;display:inline-flex;align-items:center;gap:10px;margin-top:36px;
+  padding:16px 36px;background:var(--warm);color:var(--ink);font-size:.88rem;font-weight:600;
+  letter-spacing:.06em;border:none;border-radius:40px;cursor:pointer;text-decoration:none;
+  transition:background .3s,transform .2s;
+}
+.btn-primary:hover{background:#d9b87a;transform:translateY(-2px)}
+.btn-primary svg{width:16px;height:16px}
+
+/* ════════════ FOOTER ════════════ */
+footer{background:#fff;border-top:1px solid var(--warm-lt);padding:34px 24px;text-align:center;font-size:.78rem;color:rgba(26,24,21,.38)}
+footer a{color:var(--warm);text-decoration:none}
+
+/* ════════════ KEYFRAMES ════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* ════════════ RESPONSIVE – MOBILE ════════════ */
+/*
+  Sul mobile tutto diventa una colonna semplice:
+    [linea dritta a sx] [dot] [card piena larghezza]
+  Nessuna alternanza, nessuna curva – linea verticale dritta.
+*/
+@media(max-width:680px){
+  :root{--gutter:18px;--dot-size:20px}
+
+  .step{flex-direction:row !important}                /* sempre row */
+  .step-spacer{display:none !important}               /* niente spacer */
+  .step-dot-col{padding-top:18px}
+  .step-card{max-width:100%}
+  .card-img{height:140px}
+  .card-img-num{font-size:1.8rem}
+
+  /* la linea SVG viene nascosta; usiamo un pseudo-elemento CSS dritta */
+  #timelineSvg{display:none}
+
+  .timeline-outer{padding-left:20px;padding-right:16px}
+
+  /* linea dritta via pseudo-element sul dot-col */
+  .step-dot-col::before{
+    content:'';position:absolute;
+    left:50%;top:0;
+    width:2px;height:100%;
+    background:var(--warm);
+    transform:translateX(-50%);
+    z-index:0;
+  }
+  /* estendi la linea fino allo step successivo */
+  .step::after{
+    content:'';position:absolute;
+    left:calc(20px + var(--dot-size)/2);
+    top:calc(18px + var(--dot-size));
+    width:2px;
+    height:calc(100% + 48px - 18px - var(--dot-size));
+    background:var(--warm);
+    z-index:0;
+  }
+  .step:last-child::after{display:none}
+
+  .step-dot{position:relative;z-index:1}
+
+  .intro-strip{gap:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-label">Edilizia · Servizio completo</div>
+  <h1>Costruiamo<br><em>Chiavi in Mano</em></h1>
+  <p class="hero-sub">Dalla prima idea alla consegna finale. Un percorso chiaro, senza sorprese, con un interlocutore unico per ogni fase del lavoro.</p>
+  <a href="#timeline" class="hero-cta">Scopri il percorso<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+</section>
+
+<!-- ═══ STAT STRIP ═══ -->
+<div class="intro-strip">
+  <div class="stat"><div class="stat-num">12</div><div class="stat-label">Fasi del progetto</div></div>
+  <div class="stat"><div class="stat-num">1</div><div class="stat-label">Interlocutore</div></div>
+  <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Chiavi in mano</div></div>
+  <div class="stat"><div class="stat-num">0</div><div class="stat-label">Sorprese</div></div>
+</div>
+
+<!-- ═══ SECTION TITLE ═══ -->
+<div class="section-title" id="timeline">
+  <div class="tag">Il percorso</div>
+  <h2>Ogni progetto, ogni passo</h2>
+  <p>Puoi partire dall'inizio — costruzione ex novo — oppure entrare in qualsiasi fase intermedia. Clicca su uno step per i dettagli.</p>
+</div>
+
+<!-- ═══ TIMELINE ═══ -->
+<div class="timeline-outer" id="timelineOuter">
+  <svg id="timelineSvg" aria-hidden="true"></svg>
+  <!-- step generati da JS -->
+</div>
+
+<!-- ═══ BOTTOM CTA ═══ -->
+<section class="bottom-cta">
+  <h2>Pronto a iniziare<br><em>il tuo progetto?</em></h2>
+  <p>Prenota una consulenza gratuita. Ti daremo un preventivo trasparente e un piano dettagliato entro 48 ore.</p>
+  <a href="#" class="btn-primary">Consulenza gratuita<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+</section>
+
+<footer>&copy; 2025 Chiavi in Mano Edilizia — <a href="#">Privacy</a> · <a href="#">Contatti</a></footer>
+
+<!-- ═══════════════════════ JS ═══════════════════════ -->
+<script>
+(function(){
+
+/* ─── 1. DATA ─── */
+const steps = [
+  {
+    num:"01", title:"Consulenza & Analisi", icon:"🔍", iconBg:"#e8dcc8",
+    dotColor:"#c8a96e", startHere:true,
+    // gradient che simula un'immagine di sopralluogo: toni terra/cantiere
+    imgGrad:"linear-gradient(135deg,#8b7355 0%,#a08060 35%,#c4a882 60%,#d4c5a9 100%)",
+    imgAccent:"Sopralluogo",
+    desc:"Prima visita al sito: valutiamo la fattibilità, le condizioni strutturali e le normative urbanistiche locali. Ti illustriamo le opzioni e i vincoli prima di spendere un euro.",
+    tags:["Sopralluogo","Normative","Fattibilità"]
+  },
+  {
+    num:"02", title:"Progettazione Architettonica", icon:"📐", iconBg:"#dde8d4",
+    dotColor:"#7a8f6e", startHere:false,
+    imgGrad:"linear-gradient(145deg,#3a3a4a 0%,#52526a 30%,#6e7a8a 55%,#8fa5b5 100%)",
+    imgAccent:"Progetto",
+    desc:"Il nostro architetto elabora il progetto preliminare e definitivo. Tavole, sezioni, materiali e layout degli ambienti — tutto condiviso con te in tempo reale.",
+    tags:["Progetto prelim.","Layout","Materiali"]
+  },
+  {
+    num:"03", title:"Permessi & Pratiche", icon:"📄", iconBg:"#e8dcc8",
+    dotColor:"#c8a96e", startHere:false,
+    imgGrad:"linear-gradient(130deg,#e8e0d0 0%,#d4cbb8 40%,#bfb49e 70%,#a8997e 100%)",
+    imgAccent:"Documentazione",
+    desc:"Gestiamo interamente i rapporti con il Comune: permesso di costruire, pareri della commissione paesaggio, VIA se necessaria. Nessun pensiero per te.",
+    tags:["Permesso costruire","Burocrazia","VIA"]
+  },
+  {
+    num:"04", title:"Preparazione del Cantiere", icon:"🏗️", iconBg:"#dde8d4",
+    dotColor:"#7a8f6e", startHere:false,
+    imgGrad:"linear-gradient(140deg,#5c4a3a 0%,#7a6350 30%,#9a8468 55%,#b8a080 100%)",
+    imgAccent:"Cantiere",
+    desc:"Allestimento del cantiere, recinzioni, segnaletica e organizzazione dei materiali. Pianifichiamo ogni logistica per non perdere un giorno.",
+    tags:["Allestimento","Logistica","Sicurezza"]
+  },
+  {
+    num:"05", title:"Fondazioni & Struttura", icon:"🪨", iconBg:"#f2e2d6",
+    dotColor:"#b5724a", startHere:true,
+    imgGrad:"linear-gradient(150deg,#4a4038 0%,#6b5e4e 25%,#8a7b68 50%,#a89580 75%,#c0ad95 100%)",
+    imgAccent:"Fondazioni",
+    desc:"Scavi, getto delle fondazioni in c.a., pilastri e travi. Ogni fase viene verificata con collaudo strutturale prima di procedere.",
+    tags:["Fondazioni","C.A.","Collaudo"]
+  },
+  {
+    num:"06", title:"Muratura & Tamponature", icon:"🧱", iconBg:"#e8dcc8",
+    dotColor:"#c8a96e", startHere:false,
+    imgGrad:"linear-gradient(135deg,#c27a4a 0%,#d4916a 30%,#e0a880 55%,#e8c4a0 100%)",
+    imgAccent:"Muratura",
+    desc:"Costruzione delle pareti perimetrali e dei settori interni. Materiali energy-efficient e anti-sismici su indicazione del progetto.",
+    tags:["Muratura","Isolamento","Anti-sisma"]
+  },
+  {
+    num:"07", title:"Impianti Elettrici & Idraulici", icon:"⚡", iconBg:"#dde8d4",
+    dotColor:"#7a8f6e", startHere:true,
+    imgGrad:"linear-gradient(140deg,#2a3540 0%,#3d5060 28%,#506878 50%,#6a8898 75%,#8aacbc 100%)",
+    imgAccent:"Impianti",
+    desc:"Posizionamento di tutti gli impianti: elettricità, acqua, scarichi, gas e ventilazione. Progetto degli impianti incluso.",
+    tags:["Elettrico","Idraulico","Ventilazione","Gas"]
+  },
+  {
+    num:"08", title:"Isolamento Termico & Cappotto", icon:"🔥", iconBg:"#f2e2d6",
+    dotColor:"#b5724a", startHere:false,
+    imgGrad:"linear-gradient(145deg,#e8d8c0 0%,#dcc8a0 35%,#c8b080 60%,#b89860 100%)",
+    imgAccent:"Cappotto",
+    desc:"Cappotto esterno e isolamento di volte e pavimenti. Calcoliamo la classe energetica e ti garantiamo risparmio nei consumi.",
+    tags:["Cappotto","Classe energetica","Risparmio"]
+  },
+  {
+    num:"09", title:"Servizi Igienici & Bagni", icon:"🚿", iconBg:"#d6e4ed",
+    dotColor:"#6a8fa3", startHere:true,
+    imgGrad:"linear-gradient(130deg,#e0ece8 0%,#c8ddd8 30%,#a8c8c0 55%,#88b0a8 100%)",
+    imgAccent:"Bagni",
+    desc:"Installazione di vasche, docce, sanitari e mobili bagno. Puoi iniziare direttamente da questa fase se vuoi ristrutturare solo il bagno.",
+    tags:["Sanitari","Docce","Mobili bagno"]
+  },
+  {
+    num:"10", title:"Pavimentazioni & Rivestimenti", icon:"🎨", iconBg:"#f0dce0",
+    dotColor:"#c47a6e", startHere:true,
+    imgGrad:"linear-gradient(140deg,#a08060 0%,#b89878 30%,#d0b898 55%,#e0cdb0 100%)",
+    imgAccent:"Pavimentazioni",
+    desc:"Posa di piastrelle, parquet, lastre di pietra naturale o materiali tecnici. Scelta dei materiali guidata dal design e dalla durata.",
+    tags:["Parquet","Piastrelle","Pietra naturale"]
+  },
+  {
+    num:"11", title:"Serramenti, Porte & Infissi", icon:"🪟", iconBg:"#e8dce8",
+    dotColor:"#7a5f7e", startHere:false,
+    imgGrad:"linear-gradient(135deg,#6a7a8a 0%,#8a9aaa 30%,#aab8c8 55%,#ccd8e0 100%)",
+    imgAccent:"Serramenti",
+    desc:"Montaggio di finestre a doppio o triplo vetro, porte interne e di ingresso. Alluminio, legno o PVC in base a prestazioni e estetica.",
+    tags:["Finestre","Porte","Doppio vetro"]
+  },
+  {
+    num:"12", title:"Finishing & Consegna", icon:"✨", iconBg:"#e8dcc8",
+    dotColor:"#c8a96e", startHere:false,
+    imgGrad:"linear-gradient(140deg,#f0e8d8 0%,#e0d5c0 30%,#c8bda8 55%,#b8ad90 100%)",
+    imgAccent:"Consegna",
+    desc:"Tinteggiatura, arredi fissi, pulizia finale e collaudo di tutti gli impianti. Il momento in cui ti consegniamo la chiave.",
+    tags:["Tinteggiatura","Collaudo finale","Consegna"]
+  }
+];
+
+/* ─── 2. RENDER ─── */
+const outer = document.getElementById('timelineOuter');
+
+steps.forEach((s, i) => {
+  const side = (i % 2 === 0) ? 'side-left' : 'side-right'; // alterna
+
+  const badgeHtml = s.startHere
+    ? `<div class="start-badge"><svg viewBox="0 0 10 10" fill="currentColor"><polygon points="5,0 10,10 0,10"/></svg>Puoi iniziare qui</div>`
+    : '';
+
+  const html = `
+  <div class="step ${side}" data-index="${i}">
+    <!-- spacer sul lato vuoto -->
+    <div class="step-spacer"></div>
+
+    <!-- dot centrale -->
+    <div class="step-dot-col">
+      <div class="step-dot" style="background:${s.dotColor};box-shadow:0 0 0 3px ${s.dotColor},0 4px 16px rgba(0,0,0,.2)"></div>
+    </div>
+
+    <!-- gutter -->
+    <div class="step-gutter"></div>
+
+    <!-- card -->
+    <div class="step-card" onclick="toggle(this)">
+      <!-- immagine placeholder con gradiente realistico -->
+      <div class="card-img">
+        <div class="card-img-bg" style="background:${s.imgGrad}"></div>
+        <div class="card-img-overlay">
+          <div class="card-img-num">${s.num}</div>
+          <div class="card-img-title">${s.title}</div>
+        </div>
+      </div>
+
+      <!-- corpo -->
+      <div class="card-body">
+        <div class="card-head-row">
+          <div class="card-icon" style="background:${s.iconBg}">${s.icon}</div>
+          <div>
+            <div class="card-step-label">Step ${s.num}</div>
+            <div class="card-title">${s.title}</div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 7l5 5 5-5"/></svg>
+        </div>
+        ${badgeHtml}
+        <div class="card-collapse">
+          <p class="card-desc">${s.desc}</p>
+          <div class="card-tags">${s.tags.map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>
+          <a href="#" class="card-link" onclick="event.stopPropagation()">Dettagli & contatto<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+  outer.insertAdjacentHTML('beforeend', html);
+});
+
+/* ─── 3. TOGGLE card ─── */
+function toggle(card) {
+  card.classList.toggle('open');
+  // dopo la transizione ridisegna la linea
+  setTimeout(drawCurve, 460);
+}
+
+/* ─── 4. CURVA SVG ─── */
+/*
+  Logica:
+  - Misura la posizione Y di ogni dot rispetto al contenitore.
+  - X dei dot varia in modo alternato: centro ± ampiezza fissa (serpentina).
+  - Disegna cubic-bezier tra ogni coppia di punti.
+  - La curva passa SEMPRE per il centro di ogni dot.
+*/
+function drawCurve() {
+  const svg   = document.getElementById('timelineSvg');
+  const isMobile = window.innerWidth <= 680;
+  if (isMobile) { svg.style.display = 'none'; return; }
+  svg.style.display = 'block';
+
+  const outerRect = outer.getBoundingClientRect();
+  const outerTop  = outerRect.top + window.scrollY;
+  const W         = outerRect.width;
+  const H         = outer.scrollHeight;
+
+  // centro orizzontale del contenitore
+  const cx = W / 2;
+  // ampiezza dell'oscillazione (metà della distanza tra centro e bordo card)
+  const amp = 58;
+
+  const dots   = outer.querySelectorAll('.step-dot');
+  const points = [];
+
+  dots.forEach((dot, i) => {
+    const r = dot.getBoundingClientRect();
+    const y = (r.top + window.scrollY) + r.height / 2 - outerTop;
+    // X: alterna sinistra/destra attorno al centro
+    const x = (i % 2 === 0) ? cx - amp : cx + amp;
+    points.push({ x, y });
+  });
+
+  if (points.length < 2) return;
+
+  /* costruisce il path SVG */
+  let d = `M ${points[0].x} ${points[0].y}`;
+  for (let i = 1; i < points.length; i++) {
+    const p = points[i - 1];
+    const c = points[i];
+    const midY = (p.y + c.y) / 2;
+    // i control-point mantengono la x dei rispettivi estremi → curva S naturale
+    d += ` C ${p.x} ${midY}, ${c.x} ${midY}, ${c.x} ${c.y}`;
+  }
+
+  svg.setAttribute('width',  W);
+  svg.setAttribute('height', H);
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.innerHTML = `
+    <defs>
+      <linearGradient id="lg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="#c8a96e"/>
+        <stop offset="40%"  stop-color="#7a8f6e"/>
+        <stop offset="100%" stop-color="#6a8fa3"/>
+      </linearGradient>
+    </defs>
+    <path d="${d}" fill="none" stroke="url(#lg)" stroke-width="2.8" stroke-linecap="round" stroke-dasharray="10 6" opacity=".75"/>
+  `;
+
+  /* riposiziona i dot REALMENTE sulla x della curva */
+  dots.forEach((dot, i) => {
+    const col = dot.closest('.step-dot-col');
+    // non spostare col, ma allinea il dot alla x calcolata
+    // Il dot è centrato nel col; il col è posizionato dal flex layout.
+    // Per aggiornare: posiziona il col in modo che il dot cada sulla x della curva.
+    // Calcoliamo l'offset necessario.
+    const colRect = col.getBoundingClientRect();
+    const colCenterX = colRect.left - outerRect.left + colRect.width / 2;
+    const targetX    = points[i].x;
+    const offset     = targetX - colCenterX;
+    col.style.transform = `translateX(${offset}px)`;
+  });
+}
+
+/* ─── 5. SCROLL REVEAL ─── */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      // ridisegna dopo ogni reveal (cambia layout)
+      requestAnimationFrame(() => requestAnimationFrame(drawCurve));
+    }
+  });
+}, { threshold: 0.15 });
+
+outer.querySelectorAll('.step').forEach(el => revealObs.observe(el));
+
+/* ─── 6. EVENTS ─── */
+// draw iniziale dopo fonts + layout
+document.fonts.ready.then(() => {
+  requestAnimationFrame(() => requestAnimationFrame(drawCurve));
+});
+window.addEventListener('resize', drawCurve);
+// ridisegna anche quando le card si aprono/chiudono (transizione max-height)
+new MutationObserver(() => {
+  requestAnimationFrame(() => requestAnimationFrame(drawCurve));
+}).observe(outer, { subtree: true, attributes: true, attributeFilter: ['class'] });
+
+})();
+</script>
+</body>
+</html>

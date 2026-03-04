@@ -1,0 +1,21 @@
+{
+  "name": "chiavi-in-mano",
+  "version": "1.0.0",
+  "description": "Sito web per In B. & B. S.r.l — Edilizia Chiavi in Mano",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

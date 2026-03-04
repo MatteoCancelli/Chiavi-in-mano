@@ -1,0 +1,64 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<div class="page-header">
+  <span class="tag">Portfolio</span>
+  <h1>I nostri<br><em>Progetti</em></h1>
+  <p>Costruzioni, ristrutturazioni, riqualificazioni energetiche. Ogni lavoro racconta una storia diversa.</p>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <button class="filter-btn <%= !activeCategory ? 'active' : '' %>" data-cat="all">Tutti</button>
+  <% categories.forEach(function(cat) { %>
+  <button class="filter-btn <%= activeCategory === cat ? 'active' : '' %>" data-cat="<%= cat %>">
+    <%= cat %>
+  </button>
+  <% }) %>
+</div>
+
+<!-- PROJECTS GRID -->
+<div class="projects-grid">
+  <% projects.forEach(function(p) { %>
+  <div class="project-card reveal" style="cursor:default">
+    <div class="project-card-img">
+      <div class="project-card-img-bg" style="background:<%= p.imgGrad %>"></div>
+      <div class="project-card-overlay">
+        <div class="project-card-cat"><%= p.category %></div>
+        <div class="project-card-title"><%= p.title %></div>
+      </div>
+    </div>
+    <div class="project-card-body">
+      <div class="project-card-loc">📍 <%= p.location %> · <%= p.year %></div>
+      <p class="project-card-desc"><%= p.shortDesc %></p>
+    </div>
+    <div class="project-stats">
+      <div class="project-stat">
+        <div class="project-stat-val"><%= p.stats.area %></div>
+        <div class="project-stat-label">Superficie</div>
+      </div>
+      <div class="project-stat">
+        <div class="project-stat-val"><%= p.stats.duration %></div>
+        <div class="project-stat-label">Durata</div>
+      </div>
+      <% if (p.stats.class !== '—') { %>
+      <div class="project-stat">
+        <div class="project-stat-val"><%= p.stats.class %></div>
+        <div class="project-stat-label">Classe en.</div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+  <% }) %>
+</div>
+
+<section class="bottom-cta">
+  <h2>Il prossimo potrebbe<br><em>essere il tuo.</em></h2>
+  <p>Contattaci per una consulenza gratuita e iniziamo a costruire insieme.</p>
+  <a href="/contatti" class="btn-primary">
+    Inizia il tuo progetto
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+  </a>
+</section>
+
+<%- include('partials/footer') %>
