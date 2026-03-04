@@ -707,21 +707,21 @@ footer {
   .step-card { max-width: 100%; }
   .card-img { height: 140px; }
   #timelineSvg { display: none; }
-  .timeline-outer { padding-left: 20px; padding-right: 16px; }
-  .step-dot-col::before {
-    content: ''; position: absolute;
-    left: 50%; top: 0; width: 2px; height: 100%;
-    background: var(--warm); transform: translateX(-50%); z-index: 0;
+
+  /* linea continua sul contenitore — nessun pseudo-elemento spezzato */
+  .timeline-outer {
+    padding-left: 20px; padding-right: 16px;
+    --line-x: calc(20px + var(--dot-size) / 2);
+    background-image: linear-gradient(to bottom, #c8a96e, #7a8f6e 50%, #6a8fa3);
+    background-repeat: no-repeat;
+    background-size: 2px calc(100% - 140px);
+    background-position: var(--line-x) 50px;
   }
-  .step::after {
-    content: ''; position: absolute;
-    left: calc(20px + var(--dot-size)/2);
-    top: calc(18px + var(--dot-size));
-    width: 2px;
-    height: calc(100% + 48px - 18px - var(--dot-size));
-    background: var(--warm); z-index: 0;
-  }
-  .step:last-child::after { display: none; }
+
+  /* rimuovi i vecchi segmenti spezzati */
+  .step-dot-col::before { display: none; }
+  .step::after { display: none; }
+
   .step-dot { position: relative; z-index: 1; }
   .intro-strip { gap: 24px; }
   .service-nav { grid-template-columns: 1fr; }
