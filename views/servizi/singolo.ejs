@@ -44,29 +44,7 @@
 
 </div>
 
-<!-- Progetti correlati -->
-<% if (relatedProjects.length > 0) { %>
-<div class="related-projects-section">
-  <h3 class="related-title">Progetti che includono questo servizio</h3>
-  <div class="projects-grid" style="padding:0;margin:0">
-    <% relatedProjects.forEach(function(p) { %>
-    <a href="/progetti?categoria=<%= encodeURIComponent(p.category) %>" class="project-card reveal">
-      <div class="project-card-img">
-        <%- include('../partials/img-or-grad', { item: p, altText: p.title, cssClass: 'project-card-img-bg' }) %>
-        <div class="project-card-overlay">
-          <div class="project-card-cat"><%= p.category %></div>
-          <div class="project-card-title"><%= p.title %></div>
-        </div>
-      </div>
-      <div class="project-card-body">
-        <div class="project-card-loc">📍 <%= p.location %> · <%= p.year %></div>
-        <p class="project-card-desc"><%= p.shortDesc %></p>
-      </div>
-    </a>
-    <% }) %>
-  </div>
-</div>
-<% } %>
+
 
 <!-- Navigazione tra servizi -->
 <%
