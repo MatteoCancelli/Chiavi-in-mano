@@ -297,16 +297,16 @@ Cosa include:
     category: "Finiture"
   },
   {
-    slug: "finishing-consegna",
+    slug: "arredamento-consegna",
     num: "12",
-    title: "Finishing & Consegna",
+    title: "Arredamento & Consegna",
     icon: "✨",
     iconBg: "#e8dcc8",
     dotColor: "#c8a96e",
     startHere: false,
     imgGrad: "linear-gradient(140deg,#f0e8d8 0%,#e0d5c0 30%,#c8bda8 55%,#b8ad90 100%)",
     img: null,
-    imgAccent: "Consegna",
+    imgAccent: "Arredamento & Consegna",
     shortDesc: "Tinteggiatura, arredi fissi, pulizia finale e collaudo di tutti gli impianti. La consegna delle chiavi.",
     desc: "Tinteggiatura, arredi fissi, pulizia finale e collaudo di tutti gli impianti. Il momento in cui ti consegniamo la chiave.",
     fullDesc: `Il finishing è la fase in cui tutto prende vita. Curiamo ogni dettaglio delle rifiniture, dalla tinteggiatura con colori scelti insieme, agli arredi fissi su misura, fino alla pulizia profonda degli ambienti.
@@ -321,7 +321,7 @@ Cosa include:
 - Fascicolo del fabbricato e garanzie`,
     tags: ["Tinteggiatura", "Collaudo finale", "Consegna"],
     duration: "1–3 settimane",
-    category: "Finishing"
+    category: "Arredamento & Consegna"
   }
 ];
 
