@@ -14,13 +14,41 @@ if (navToggle && navLinks) {
   });
 }
 
-/* ── NAV DROPDOWN (desktop: hover via CSS, mobile: click toggle) ─────── */
-const dropdownToggle = document.querySelector('.nav-dropdown-toggle');
-if (dropdownToggle) {
-  dropdownToggle.addEventListener('click', () => {
-    dropdownToggle.classList.toggle('open');
+/* ── NAV DROPDOWN ────────────────────────────────────────────────────── */
+(function initDropdown() {
+  const dropdown = document.querySelector('.nav-dropdown');
+  const menu     = document.querySelector('.nav-dropdown-menu');
+  const toggle   = document.querySelector('.nav-dropdown-toggle');
+  if (!dropdown || !menu) return;
+
+  const isMobile = () => window.innerWidth <= 820;
+  let closeTimer = null;
+
+  function open() {
+    clearTimeout(closeTimer);
+    menu.classList.add('open');
+    toggle && toggle.classList.add('open');
+  }
+  function scheduleClose() {
+    closeTimer = setTimeout(() => {
+      menu.classList.remove('open');
+      toggle && toggle.classList.remove('open');
+    }, 120);
+  }
+
+  // desktop: hover su tutta l'area .nav-dropdown + hover sul menu stesso
+  dropdown.addEventListener('mouseenter', () => { if (!isMobile()) open(); });
+  dropdown.addEventListener('mouseleave', () => { if (!isMobile()) scheduleClose(); });
+  menu.addEventListener('mouseenter',     () => { if (!isMobile()) clearTimeout(closeTimer); });
+  menu.addEventListener('mouseleave',     () => { if (!isMobile()) scheduleClose(); });
+
+  // mobile: click
+  toggle && toggle.addEventListener('click', () => {
+    if (!isMobile()) return;
+    menu.classList.toggle('open');
+    toggle.classList.toggle('open');
   });
-}
+})();
 
 /* ── SCROLL REVEAL (generico .reveal) ────────────────────────────────── */
 const revealAll = new IntersectionObserver(entries => {
