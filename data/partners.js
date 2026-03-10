@@ -54,7 +54,7 @@ const partners = [
     img: null,
     companies: [
       { name: "Mapei", role: "Materiali strutturali e laterizi", logo: "img/partners/Mapei.webp", logoBg: "#e8dcc8", website: "https://www.mapei.com/it/it/home-page" },
-      { name: "KeraKoll", role: "Colle, cementi e malte", logo: "img/partners/KeraKoll.webp", logoBg: "#dde8d4", website: "https://it.kerakoll.com/" }
+      { name: "Kerakoll", role: "Colle, cementi e malte", logo: "img/partners/Kerakoll.webp", logoBg: "#dde8d4", website: "https://it.kerakoll.com/" }
     ]
   }
 ];
