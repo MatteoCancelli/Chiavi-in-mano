@@ -57,7 +57,7 @@ exports.servizi = (req, res) => {
 // ── SERVIZIO SINGOLO ──────────────────────────────────────────────────────────
 exports.servizioSingolo = (req, res) => {
   const step = steps.find(s => s.slug === req.params.slug);
-  if (!step) return res.status(404).render('404', { title: 'Pagina non trovata', page: '' });
+  if (!step) return res.status(404).render('404', { title: 'Pagina non trovata', meta: 'Pagina non trovata - Chiavi in mano', page: '' });
 
   res.render('servizi/singolo', {
     title: `${step.title} — In B. & B. S.r.l`,

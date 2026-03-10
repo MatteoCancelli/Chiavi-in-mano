@@ -20,7 +20,7 @@ app.use('/', require('./routes/index'));
 
 // ── 404 ───────────────────────────────────────────────────────────────────────
 app.use((req, res) => {
-  res.status(404).render('404', { title: 'Pagina non trovata', page: '' });
+  res.status(404).render('404', { title: 'Pagina non trovata', meta: 'Pagina non trovata', page: '' });
 });
 
 // ── Start ─────────────────────────────────────────────────────────────────────
