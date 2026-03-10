@@ -1,0 +1,188 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+
+<!-- HERO -->
+<div class="page-header">
+  <span class="tag">Showroom & Partnership</span>
+  <h1>Vieni a <em>toccare</em><br>con mano</h1>
+  <p>Il nostro showroom a Brescia espone materiali, pavimentazioni e finiture dei migliori partner. Tutto quello che vedi, lo installiamo noi.</p>
+</div>
+
+<!-- CAROSELLO INGRESSO -->
+<div class="carousel-section">
+  <div class="carousel-label">
+    <span class="tag">Ingresso showroom</span>
+    <span class="carousel-credit">Arredamento by <em>Florian</em></span>
+  </div>
+
+  <div class="carousel-wrap" id="carousel">
+    <div class="carousel-track" id="carouselTrack">
+      <% showroomCarousel.forEach(function(slide, i) { %>
+      <div class="carousel-slide">
+        <% if (slide.img) { %>
+          <img src="<%= slide.img %>" alt="<%= slide.caption %>" class="carousel-img" loading="<%= i === 0 ? 'eager' : 'lazy' %>"/>
+        <% } else { %>
+          <div class="carousel-img" style="background:<%= slide.imgGrad %>"></div>
+        <% } %>
+        <div class="carousel-caption"><%= slide.caption %></div>
+      </div>
+      <% }) %>
+    </div>
+    <button class="carousel-btn carousel-prev" id="carouselPrev" aria-label="Precedente">
+      <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 4l-4 4 4 4"/></svg>
+    </button>
+    <button class="carousel-btn carousel-next" id="carouselNext" aria-label="Successivo">
+      <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"/></svg>
+    </button>
+    <div class="carousel-dots" id="carouselDots">
+      <% showroomCarousel.forEach(function(_, i) { %>
+      <button class="carousel-dot <%= i === 0 ? 'active' : '' %>" data-index="<%= i %>" aria-label="Slide <%= i+1 %>"></button>
+      <% }) %>
+    </div>
+  </div>
+</div>
+
+<!-- SEZIONI SHOWROOM -->
+<% const showroomPartners = partners.filter(p => p.location === 'showroom'); %>
+<% showroomPartners.forEach(function(cat, ci) { %>
+<section class="showroom-section <%= ci % 2 === 1 ? 'showroom-section--alt' : '' %>" id="<%= cat.slug %>">
+  <div class="showroom-section-inner">
+    <div class="showroom-section-img reveal">
+      <% if (cat.img) { %>
+        <img src="<%= cat.img %>" alt="<%= cat.category %>" style="width:100%;height:100%;object-fit:cover"/>
+      <% } else { %>
+        <div style="width:100%;height:100%;background:<%= cat.imgGrad %>"></div>
+      <% } %>
+      <div class="showroom-section-img-label"><%= cat.category %></div>
+    </div>
+    <div class="showroom-section-content reveal">
+      <h2><%= cat.category %></h2>
+      <p class="showroom-section-desc"><%= cat.showroomDesc %></p>
+      <div class="partner-cards">
+        <p class="partner-cards-label">I nostri partner</p>
+        <% cat.companies.forEach(function(co) { %>
+        <div class="partner-card">
+          <div class="partner-logo-wrap" style="background:<%= co.logoBg %>">
+            <% if (co.logo) { %>
+              <img src="<%= co.logo %>" alt="<%= co.name %>" class="partner-logo-img"/>
+            <% } else { %>
+              <span class="partner-logo-placeholder"><%= co.name.charAt(0) %></span>
+            <% } %>
+          </div>
+          <div class="partner-info">
+            <div class="partner-name"><%= co.name %></div>
+            <div class="partner-role"><%= co.role %></div>
+          </div>
+          <% if (co.website) { %>
+          <a href="<%= co.website %>" target="_blank" rel="noopener" class="partner-link">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <% } %>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</section>
+<% }) %>
+
+<!-- SEZIONE MAGAZZINO -->
+<% const magazzinoPartners = partners.filter(p => p.location === 'magazzino'); %>
+<% if (magazzinoPartners.length > 0) { %>
+<section class="magazzino-section">
+  <div class="magazzino-inner">
+    <div class="section-title" style="padding:0 0 40px;text-align:left">
+      <div class="tag">Magazzino</div>
+      <h2>Materiali da costruzione</h2>
+      <p style="margin:12px 0 0;max-width:540px">Colle, cementi, malte e materiali edili disponibili nel nostro magazzino. Prodotti certificati sempre pronti per il cantiere.</p>
+    </div>
+    <div class="magazzino-grid">
+      <% magazzinoPartners.forEach(function(cat) { %>
+        <% cat.companies.forEach(function(co) { %>
+        <div class="partner-card reveal">
+          <div class="partner-logo-wrap" style="background:<%= co.logoBg %>">
+            <% if (co.logo) { %>
+              <img src="<%= co.logo %>" alt="<%= co.name %>" class="partner-logo-img"/>
+            <% } else { %>
+              <span class="partner-logo-placeholder"><%= co.name.charAt(0) %></span>
+            <% } %>
+          </div>
+          <div class="partner-info">
+            <div class="partner-name"><%= co.name %></div>
+            <div class="partner-role"><%= co.role %></div>
+          </div>
+          <% if (co.website) { %>
+          <a href="<%= co.website %>" target="_blank" rel="noopener" class="partner-link">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <% } %>
+        </div>
+        <% }) %>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<!-- ORARI -->
+<section class="orari-section">
+  <div class="orari-inner">
+    <div class="orari-text">
+      <span class="tag">Vieni a trovarci</span>
+      <h2>Siamo aperti<br><em>per te</em></h2>
+      <p>Passa in showroom per scegliere i materiali di persona. Ti aspettiamo.</p>
+      <a href="/contatti" class="btn-primary" style="margin-top:28px">
+        Come raggiungerci
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+    <div class="orari-table">
+      <div class="orari-row">
+        <span class="orari-day">Lunedì – Venerdì</span>
+        <span class="orari-time">08:30 – 12:30 &nbsp;/&nbsp; 14:00 – 18:00</span>
+      </div>
+      <div class="orari-row">
+        <span class="orari-day">Sabato</span>
+        <span class="orari-time">08:30 – 12:30</span>
+      </div>
+      <div class="orari-row orari-row--closed">
+        <span class="orari-day">Domenica</span>
+        <span class="orari-time">Chiuso</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>
+
+<script>
+(function() {
+  const track = document.getElementById('carouselTrack');
+  const dots  = document.querySelectorAll('.carousel-dot');
+  const total = <%= showroomCarousel.length %>;
+  let current = 0, timer = null;
+
+  function goTo(idx) {
+    current = (idx + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+  function startAuto() { timer = setInterval(next, 4000); }
+  function stopAuto()  { clearInterval(timer); }
+
+  document.getElementById('carouselNext').addEventListener('click', () => { stopAuto(); next(); startAuto(); });
+  document.getElementById('carouselPrev').addEventListener('click', () => { stopAuto(); prev(); startAuto(); });
+  dots.forEach(d => d.addEventListener('click', () => { stopAuto(); goTo(+d.dataset.index); startAuto(); }));
+
+  let startX = 0;
+  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend',   e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) { stopAuto(); diff > 0 ? next() : prev(); startAuto(); }
+  });
+
+  startAuto();
+})();
+</script>

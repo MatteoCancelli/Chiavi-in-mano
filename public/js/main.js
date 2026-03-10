@@ -14,6 +14,14 @@ if (navToggle && navLinks) {
   });
 }
 
+/* ── NAV DROPDOWN (desktop: hover via CSS, mobile: click toggle) ─────── */
+const dropdownToggle = document.querySelector('.nav-dropdown-toggle');
+if (dropdownToggle) {
+  dropdownToggle.addEventListener('click', () => {
+    dropdownToggle.classList.toggle('open');
+  });
+}
+
 /* ── SCROLL REVEAL (generico .reveal) ────────────────────────────────── */
 const revealAll = new IntersectionObserver(entries => {
   entries.forEach(e => {

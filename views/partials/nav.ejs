@@ -7,8 +7,21 @@
 </nav>
 
 <ul class="nav-links">
-  <li><a href="/"           class="<%= page === 'home'      ? 'active' : '' %>">Home</a></li>
-  <li><a href="/servizi"    class="<%= page === 'servizi'   ? 'active' : '' %>">Servizi</a></li>
-  <li><a href="/chi-siamo"  class="<%= page === 'chi-siamo' ? 'active' : '' %>">Chi siamo</a></li>
-  <li><a href="/contatti"   class="nav-cta">Contattaci</a></li>
+  <li><a href="/"         class="<%= page === 'home'     ? 'active' : '' %>">Home</a></li>
+  <li><a href="/servizi"  class="<%= page === 'servizi'  ? 'active' : '' %>">Servizi</a></li>
+  <li><a href="/showroom" class="<%= page === 'showroom' ? 'active' : '' %>">Showroom</a></li>
+
+  <!-- Dropdown Azienda -->
+  <li class="nav-dropdown">
+    <button class="nav-dropdown-toggle <%= (page === 'chi-siamo' || page === 'certificati') ? 'active' : '' %>">
+      Azienda
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l4 4 4-4"/></svg>
+    </button>
+    <ul class="nav-dropdown-menu">
+      <li><a href="/chi-siamo"           class="<%= page === 'chi-siamo'    ? 'active' : '' %>">Chi siamo</a></li>
+      <li><a href="/azienda/certificati" class="<%= page === 'certificati'  ? 'active' : '' %>">Certificazioni</a></li>
+    </ul>
+  </li>
+
+  <li><a href="/contatti" class="nav-cta">Contattaci</a></li>
 </ul>

@@ -1,5 +1,7 @@
 const steps        = require('../data/steps');
 const testimonials = require('../data/testimonials');
+const { partners, showroomCarousel } = require('../data/partners');
+const certificates = require('../data/certificates');
 
 // ── HOME ──────────────────────────────────────────────────────────────────────
 exports.home = (req, res) => {
@@ -18,6 +20,27 @@ exports.chiSiamo = (req, res) => {
     title: 'Chi Siamo — In B. & B. S.r.l',
     meta: 'Scopri la storia, il team e i valori di In B. & B. S.r.l, edilizia chiavi in mano in provincia di Brescia.',
     page: 'chi-siamo'
+  });
+};
+
+// ── SHOWROOM ──────────────────────────────────────────────────────────────────
+exports.showroom = (req, res) => {
+  res.render('azienda/showroom', {
+    title: 'Showroom & Partnership — In B. & B. S.r.l',
+    meta: 'Visita il nostro showroom a Brescia: materiali edili, parquet e PVC dei migliori partner.',
+    partners,
+    showroomCarousel,
+    page: 'showroom'
+  });
+};
+
+// ── CERTIFICATI ───────────────────────────────────────────────────────────────
+exports.certificati = (req, res) => {
+  res.render('azienda/certificati', {
+    title: 'Certificazioni — In B. & B. S.r.l',
+    meta: 'Certificazioni e attestati di qualità di In B. & B. S.r.l.',
+    certificates,
+    page: 'certificati'
   });
 };
 
@@ -44,7 +67,6 @@ exports.servizioSingolo = (req, res) => {
     page: 'servizi'
   });
 };
-
 
 // ── CONTATTI ──────────────────────────────────────────────────────────────────
 exports.contatti = (req, res) => {
