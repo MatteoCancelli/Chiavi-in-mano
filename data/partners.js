@@ -9,11 +9,11 @@ const partners = [
     imgGrad: "linear-gradient(145deg,#6a7a8a 0%,#8a9aaa 30%,#aab8c8 55%,#ccd8e0 100%)",
     img: null,
     companies: [
-      { name: "Florim Ceramiche S.P.A.", role: "Gres porcellanato e grandi lastre", logo: "img/partners/Florim Ceramiche.png", logoBg: "#d6e4ed", website: null },
-      { name: "Marazzi Group", role: "Rivestimenti bagno e cucina", logo: null, logoBg: "#e8dce8", website: null },
-      { name: "Energie Ker", role: "Ceramiche da esterno e decori", logo: null, logoBg: "#dde8d4", website: null },
-      { name: "Ceramica Coem e Fioranese", role: "Mosaici e formati speciali", logo: null, logoBg: "#e8dcc8", website: null },
-      { name: "Casalgrande Padana", role: "Effetto marmo e pietra naturale", logo: null, logoBg: "#f2e2d6", website: null }
+      { name: "Florim Ceramiche S.P.A.", role: "Gres porcellanato e grandi lastre", logo: "img/partners/Florim Ceramiche.webp", logoBg: "#d6e4ed", website: null },
+      { name: "Marazzi Group", role: "Rivestimenti bagno e cucina", logo: "img/partners/Marazzi Group.webp", logoBg: "#e8dce8", website: null },
+      { name: "Energie Ker", role: "Ceramiche da esterno e decori", logo: "img/partners/Energie Ker.webp", logoBg: "#dde8d4", website: null },
+      { name: "Ceramica Coem e Fioranese", role: "Mosaici e formati speciali", logo: "img/partners/Ceramica Coem e Fioranese.webp", logoBg: "#e8dcc8", website: null },
+      { name: "Casalgrande Padana", role: "Effetto marmo e pietra naturale", logo: "img/partners/Casalgrande Padana.webp", logoBg: "#f2e2d6", website: null }
     ]
   },
   {
@@ -25,9 +25,9 @@ const partners = [
     imgGrad: "linear-gradient(140deg,#a08060 0%,#b89878 30%,#d0b898 55%,#e0cdb0 100%)",
     img: null,
     companies: [
-      { name: "Azienda Parquet 1", role: "Parquet massello e prefinito", logo: null, logoBg: "#f2e2d6", website: null },
-      { name: "Azienda Parquet 2", role: "Parquet su misura e restauro", logo: null, logoBg: "#e8dcc8", website: null },
-      { name: "Azienda Parquet 3", role: "Pavimenti in legno tecnico", logo: null, logoBg: "#dde8d4", website: null }
+      { name: "Berti", role: "Parquet massello e prefinito", logo: "img/partners/Berti.webp", logoBg: "#f2e2d6", website: null },
+      { name: "Labor Legno", role: "Parquet su misura e restauro", logo: "img/partners/Labor Legno.webp", logoBg: "#e8dcc8", website: null },
+      { name: "Beki Floor", role: "Pavimenti in legno tecnico", logo: "img/partners/Beki Floor.webp", logoBg: "#dde8d4", website: null }
     ]
   },
   {
@@ -39,7 +39,7 @@ const partners = [
     imgGrad: "linear-gradient(130deg,#e0ece8 0%,#c8ddd8 30%,#a8c8c0 55%,#88b0a8 100%)",
     img: null,
     companies: [
-      { name: "Azienda PVC 1", role: "Pavimenti in vinile e LVT", logo: null, logoBg: "#d6e4ed", website: null }
+      { name: "Forbo Flooring System", role: "Pavimenti in vinile e LVT", logo: "img/partners/Forbo Flooring System.webp", logoBg: "#d6e4ed", website: null }
     ]
   },
 
@@ -53,8 +53,8 @@ const partners = [
     imgGrad: "linear-gradient(135deg,#8b7355 0%,#a08060 35%,#c4a882 60%,#d4c5a9 100%)",
     img: null,
     companies: [
-      { name: "Azienda Edile 1", role: "Materiali strutturali e laterizi", logo: null, logoBg: "#e8dcc8", website: null },
-      { name: "Azienda Edile 2", role: "Colle, cementi e malte", logo: null, logoBg: "#dde8d4", website: null }
+      { name: "Mapei", role: "Materiali strutturali e laterizi", logo: "img/partners/Mapei.webp", logoBg: "#e8dcc8", website: null },
+      { name: "KeraKoll", role: "Colle, cementi e malte", logo: "img/partners/KeraKoll.webp", logoBg: "#dde8d4", website: null }
     ]
   }
 ];
@@ -62,9 +62,9 @@ const partners = [
 // Carosello showroom ingresso (4 foto "Powered by Florian")
 const showroomCarousel = [
   { img: null, imgGrad: "linear-gradient(145deg,#3a3a4a 0%,#52526a 30%,#6e7a8a 55%,#8fa5b5 100%)", caption: "Ingresso showroom" },
-  { img: null, imgGrad: "linear-gradient(135deg,#8b7355 0%,#a08060 35%,#c4a882 60%,#d4c5a9 100%)", caption: "Area ceramiche" },
-  { img: null, imgGrad: "linear-gradient(140deg,#a08060 0%,#b89878 30%,#d0b898 55%,#e0cdb0 100%)", caption: "Area parquet" },
-  { img: null, imgGrad: "linear-gradient(130deg,#e0ece8 0%,#c8ddd8 30%,#a8c8c0 55%,#88b0a8 100%)", caption: "Area PVC e rivestimenti" }
+  { img: null, imgGrad: "linear-gradient(135deg,#8b7355 0%,#a08060 35%,#c4a882 60%,#d4c5a9 100%)", caption: "Area cucina" },
+  { img: null, imgGrad: "linear-gradient(140deg,#a08060 0%,#b89878 30%,#d0b898 55%,#e0cdb0 100%)", caption: "Area gres porcellanato" },
+  { img: null, imgGrad: "linear-gradient(130deg,#e0ece8 0%,#c8ddd8 30%,#a8c8c0 55%,#88b0a8 100%)", caption: "Area ..." }
 ];
 
 module.exports = { partners, showroomCarousel };

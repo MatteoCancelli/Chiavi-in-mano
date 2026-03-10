@@ -12,7 +12,7 @@
 <div class="carousel-section">
   <div class="carousel-label">
     <span class="tag">Ingresso showroom</span>
-    <span class="carousel-credit">Arredamento by <em>Florian</em></span>
+    <span class="carousel-credit">Design by <em>Florian</em></span>
   </div>
 
   <div class="carousel-wrap" id="carousel">
@@ -58,28 +58,30 @@
     <div class="showroom-section-content reveal">
       <h2><%= cat.category %></h2>
       <p class="showroom-section-desc"><%= cat.showroomDesc %></p>
-      <div class="partner-cards">
+      <div class="partner-grid">
         <p class="partner-cards-label">I nostri partner</p>
-        <% cat.companies.forEach(function(co) { %>
-        <div class="partner-card">
-          <div class="partner-logo-wrap" style="background:<%= co.logoBg %>">
-            <% if (co.logo) { %>
-              <img src="<%= co.logo %>" alt="<%= co.name %>" class="partner-logo-img"/>
-            <% } else { %>
-              <span class="partner-logo-placeholder"><%= co.name.charAt(0) %></span>
-            <% } %>
-          </div>
-          <div class="partner-info">
-            <div class="partner-name"><%= co.name %></div>
-            <div class="partner-role"><%= co.role %></div>
-          </div>
+        <div class="partner-logo-grid">
+          <% cat.companies.forEach(function(co) { %>
           <% if (co.website) { %>
-          <a href="<%= co.website %>" target="_blank" rel="noopener" class="partner-link">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-          </a>
+          <a href="<%= co.website %>" target="_blank" rel="noopener" class="partner-logo-card">
+          <% } else { %>
+          <div class="partner-logo-card">
           <% } %>
+            <div class="partner-logo-box">
+              <% if (co.logo) { %>
+                <img src="<%= co.logo %>" alt="<%= co.name %>" class="partner-logo-full"/>
+              <% } else { %>
+                <span class="partner-logo-initials"><%= co.name.split(' ').map(w => w[0]).join('').slice(0,2) %></span>
+              <% } %>
+            </div>
+            <div class="partner-logo-name"><%= co.name %></div>
+          <% if (co.website) { %>
+          </a>
+          <% } else { %>
+          </div>
+          <% } %>
+          <% }) %>
         </div>
-        <% }) %>
       </div>
     </div>
   </div>
@@ -96,27 +98,27 @@
       <h2>Materiali da costruzione</h2>
       <p style="margin:12px 0 0;max-width:540px">Colle, cementi, malte e materiali edili disponibili nel nostro magazzino. Prodotti certificati sempre pronti per il cantiere.</p>
     </div>
-    <div class="magazzino-grid">
+    <div class="partner-logo-grid partner-logo-grid--dark">
       <% magazzinoPartners.forEach(function(cat) { %>
         <% cat.companies.forEach(function(co) { %>
-        <div class="partner-card reveal">
-          <div class="partner-logo-wrap" style="background:<%= co.logoBg %>">
+        <% if (co.website) { %>
+        <a href="<%= co.website %>" target="_blank" rel="noopener" class="partner-logo-card partner-logo-card--dark reveal">
+        <% } else { %>
+        <div class="partner-logo-card partner-logo-card--dark reveal">
+        <% } %>
+          <div class="partner-logo-box">
             <% if (co.logo) { %>
-              <img src="<%= co.logo %>" alt="<%= co.name %>" class="partner-logo-img"/>
+              <img src="<%= co.logo %>" alt="<%= co.name %>" class="partner-logo-full"/>
             <% } else { %>
-              <span class="partner-logo-placeholder"><%= co.name.charAt(0) %></span>
+              <span class="partner-logo-initials"><%= co.name.split(' ').map(w => w[0]).join('').slice(0,2) %></span>
             <% } %>
           </div>
-          <div class="partner-info">
-            <div class="partner-name"><%= co.name %></div>
-            <div class="partner-role"><%= co.role %></div>
-          </div>
-          <% if (co.website) { %>
-          <a href="<%= co.website %>" target="_blank" rel="noopener" class="partner-link">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-          </a>
-          <% } %>
+          <div class="partner-logo-name"><%= co.name %></div>
+        <% if (co.website) { %>
+        </a>
+        <% } else { %>
         </div>
+        <% } %>
         <% }) %>
       <% }) %>
     </div>
@@ -139,7 +141,7 @@
     <div class="orari-table">
       <div class="orari-row">
         <span class="orari-day">Lunedì – Venerdì</span>
-        <span class="orari-time">08:30 – 12:30 &nbsp;/&nbsp; 14:00 – 18:00</span>
+        <span class="orari-time">08:30 – 12:30 &nbsp;/&nbsp; 14:30 – 18:30</span>
       </div>
       <div class="orari-row">
         <span class="orari-day">Sabato</span>

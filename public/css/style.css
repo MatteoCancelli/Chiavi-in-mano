@@ -1133,3 +1133,82 @@ footer {
   .orari-inner { grid-template-columns: 1fr; gap: 36px; }
   .orari-row { flex-direction: column; align-items: flex-start; gap: 4px; padding: 14px 18px; }
 }
+
+/* ─── PARTNER LOGO GRID ─────────────────────────────────────────────── */
+.partner-grid { margin-top: 0; }
+
+.partner-logo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.partner-logo-card {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 10px; padding: 16px 12px;
+  background: #fff;
+  border: 1px solid rgba(200,169,110,.16);
+  border-radius: var(--radius);
+  text-decoration: none; color: var(--ink);
+  transition: transform .25s, box-shadow .25s;
+  text-align: center;
+}
+.partner-logo-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 24px rgba(26,24,21,.1);
+}
+
+.partner-logo-box {
+  width: 140px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* sicurezza extra */
+}
+
+.partner-logo-box img {
+  max-width: 95%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain; 
+}
+
+.partner-logo-full {
+  width: 100%; height: 100%;
+  object-fit: contain; padding: 0;
+}
+.partner-logo-initials {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem; font-weight: 700;
+  color: rgba(26,24,21,.25);
+}
+
+.partner-logo-name {
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--ink); line-height: 1.3;
+}
+
+
+/* variante dark (magazzino) */
+.partner-logo-grid--dark .partner-logo-card,
+.partner-logo-card--dark {
+  background: rgba(255,255,255,.07) !important;
+  border-color: rgba(200,169,110,.2) !important;
+}
+.partner-logo-card--dark .partner-logo-name { color: #fff; }
+.partner-logo-card--dark .partner-logo-role { color: rgba(255,255,255,.4); }
+.partner-logo-card--dark .partner-logo-initials { color: rgba(255,255,255,.4); }
+
+@media (max-width: 680px) {
+  .partner-logo-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+  }
+  .partner-logo-box {
+    width: 100px;
+    height: 64px;
+  }
+}
