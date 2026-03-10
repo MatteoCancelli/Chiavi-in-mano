@@ -12,23 +12,7 @@
   <div class="cert-card reveal">
     <!-- Anteprima -->
     <div class="cert-preview">
-      <% if (cert.file) { %>
-        <div class="cert-preview-bg" style="background:<%= cert.imgGrad %>">
-          <svg class="cert-pdf-icon" viewBox="0 0 48 48" fill="none">
-            <rect x="8" y="4" width="32" height="40" rx="3" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.4)" stroke-width="1.5"/>
-            <path d="M28 4v12h12" stroke="rgba(255,255,255,.4)" stroke-width="1.5" fill="none"/>
-            <text x="14" y="34" font-family="serif" font-size="10" fill="rgba(255,255,255,.7)" font-weight="bold">PDF</text>
-          </svg>
-        </div>
-      <% } else { %>
-        <div class="cert-preview-bg" style="background:<%= cert.imgGrad %>">
-          <svg class="cert-pdf-icon" viewBox="0 0 48 48" fill="none">
-            <rect x="8" y="4" width="32" height="40" rx="3" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.4)" stroke-width="1.5"/>
-            <path d="M28 4v12h12" stroke="rgba(255,255,255,.4)" stroke-width="1.5" fill="none"/>
-            <text x="14" y="34" font-family="serif" font-size="10" fill="rgba(255,255,255,.7)" font-weight="bold">PDF</text>
-          </svg>
-        </div>
-      <% } %>
+      <%- include('../partials/img-or-grad', { item: cert, altText: cert.name, cssClass: 'cert-preview-bg' }) %>
       <span class="cert-year"><%= cert.year %></span>
     </div>
 
