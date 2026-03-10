@@ -1,0 +1,54 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+
+<div class="page-header">
+  <span class="tag">Azienda · Certificazioni</span>
+  <h1>Le nostre<br><em>Certificazioni</em></h1>
+  <p>Documenti e attestati che certificano la qualità, la sicurezza e la professionalità del nostro lavoro.</p>
+</div>
+
+<div class="cert-grid">
+  <% certificates.forEach(function(cert) { %>
+  <div class="cert-card reveal">
+    <!-- Anteprima -->
+    <div class="cert-preview">
+      <% if (cert.file) { %>
+        <div class="cert-preview-bg" style="background:<%= cert.imgGrad %>">
+          <svg class="cert-pdf-icon" viewBox="0 0 48 48" fill="none">
+            <rect x="8" y="4" width="32" height="40" rx="3" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.4)" stroke-width="1.5"/>
+            <path d="M28 4v12h12" stroke="rgba(255,255,255,.4)" stroke-width="1.5" fill="none"/>
+            <text x="14" y="34" font-family="serif" font-size="10" fill="rgba(255,255,255,.7)" font-weight="bold">PDF</text>
+          </svg>
+        </div>
+      <% } else { %>
+        <div class="cert-preview-bg" style="background:<%= cert.imgGrad %>">
+          <svg class="cert-pdf-icon" viewBox="0 0 48 48" fill="none">
+            <rect x="8" y="4" width="32" height="40" rx="3" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.4)" stroke-width="1.5"/>
+            <path d="M28 4v12h12" stroke="rgba(255,255,255,.4)" stroke-width="1.5" fill="none"/>
+            <text x="14" y="34" font-family="serif" font-size="10" fill="rgba(255,255,255,.7)" font-weight="bold">PDF</text>
+          </svg>
+        </div>
+      <% } %>
+      <span class="cert-year"><%= cert.year %></span>
+    </div>
+
+    <!-- Info -->
+    <div class="cert-body">
+      <div class="cert-name"><%= cert.name %></div>
+      <p class="cert-desc"><%= cert.description %></p>
+      <% if (cert.file) { %>
+      <a href="<%= cert.file %>" download class="cert-download">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M8 3v8M4 7l4 4 4-4M3 13h10"/>
+        </svg>
+        Scarica PDF
+      </a>
+      <% } else { %>
+      <span class="cert-soon">In caricamento</span>
+      <% } %>
+    </div>
+  </div>
+  <% }) %>
+</div>
+
+<%- include('../partials/footer') %>
