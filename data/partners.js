@@ -9,11 +9,11 @@ const partners = [
     imgGrad: "linear-gradient(145deg,#6a7a8a 0%,#8a9aaa 30%,#aab8c8 55%,#ccd8e0 100%)",
     img: null,
     companies: [
-      { name: "Florim Ceramiche S.P.A.", role: "Gres porcellanato e grandi lastre", logo: "img/partners/Florim Ceramiche.webp", logoBg: "#d6e4ed", website: null },
-      { name: "Marazzi Group", role: "Rivestimenti bagno e cucina", logo: "img/partners/Marazzi Group.webp", logoBg: "#e8dce8", website: null },
-      { name: "Energie Ker", role: "Ceramiche da esterno e decori", logo: "img/partners/Energie Ker.webp", logoBg: "#dde8d4", website: null },
-      { name: "Ceramica Coem e Fioranese", role: "Mosaici e formati speciali", logo: "img/partners/Ceramica Coem e Fioranese.webp", logoBg: "#e8dcc8", website: null },
-      { name: "Casalgrande Padana", role: "Effetto marmo e pietra naturale", logo: "img/partners/Casalgrande Padana.webp", logoBg: "#f2e2d6", website: null }
+      { name: "Florim Ceramiche S.P.A.", role: "Gres porcellanato e grandi lastre", logo: "img/partners/Florim Ceramiche.webp", logoBg: "#d6e4ed", website: "https://www.florim.com/it" },
+      { name: "Marazzi Group", role: "Rivestimenti bagno e cucina", logo: "img/partners/Marazzi Group.webp", logoBg: "#e8dce8", website: "https://www.marazzi.it" },
+      { name: "Energie Ker", role: "Ceramiche da esterno e decori", logo: "img/partners/Energie Ker.webp", logoBg: "#dde8d4", website: "https://www.energieker.it/it/" },
+      { name: "Ceramica Coem e Fioranese", role: "Mosaici e formati speciali", logo: "img/partners/Ceramica Coem e Fioranese.webp", logoBg: "#e8dcc8", website: "https://www.coem.it/" },
+      { name: "Casalgrande Padana", role: "Effetto marmo e pietra naturale", logo: "img/partners/Casalgrande Padana.webp", logoBg: "#f2e2d6", website: "https://www.casalgrandepadana.it/" }
     ]
   },
   {
@@ -26,7 +26,7 @@ const partners = [
     img: null,
     companies: [
       { name: "Berti", role: "Parquet massello e prefinito", logo: "img/partners/Berti.webp", logoBg: "#f2e2d6", website: null },
-      { name: "Labor Legno", role: "Parquet su misura e restauro", logo: "img/partners/Labor Legno.webp", logoBg: "#e8dcc8", website: null },
+      { name: "Labor Legno", role: "Parquet su misura e restauro", logo: "img/partners/Labor Legno.webp", logoBg: "#e8dcc8", website: "https://www.laborlegno.it/" },
       { name: "Beki Floor", role: "Pavimenti in legno tecnico", logo: "img/partners/Beki Floor.webp", logoBg: "#dde8d4", website: null }
     ]
   },
@@ -39,7 +39,7 @@ const partners = [
     imgGrad: "linear-gradient(130deg,#e0ece8 0%,#c8ddd8 30%,#a8c8c0 55%,#88b0a8 100%)",
     img: null,
     companies: [
-      { name: "Forbo Flooring System", role: "Pavimenti in vinile e LVT", logo: "img/partners/Forbo Flooring System.webp", logoBg: "#d6e4ed", website: null }
+      { name: "Forbo Flooring System", role: "Pavimenti in vinile e LVT", logo: "img/partners/Forbo Flooring System.webp", logoBg: "#d6e4ed", website: "https://www.forbo.com/flooring/it-it/" }
     ]
   },
 
@@ -53,8 +53,8 @@ const partners = [
     imgGrad: "linear-gradient(135deg,#8b7355 0%,#a08060 35%,#c4a882 60%,#d4c5a9 100%)",
     img: null,
     companies: [
-      { name: "Mapei", role: "Materiali strutturali e laterizi", logo: "img/partners/Mapei.webp", logoBg: "#e8dcc8", website: null },
-      { name: "KeraKoll", role: "Colle, cementi e malte", logo: "img/partners/KeraKoll.webp", logoBg: "#dde8d4", website: null }
+      { name: "Mapei", role: "Materiali strutturali e laterizi", logo: "img/partners/Mapei.webp", logoBg: "#e8dcc8", website: "https://www.mapei.com/it/it/home-page" },
+      { name: "KeraKoll", role: "Colle, cementi e malte", logo: "img/partners/KeraKoll.webp", logoBg: "#dde8d4", website: "https://it.kerakoll.com/" }
     ]
   }
 ];
