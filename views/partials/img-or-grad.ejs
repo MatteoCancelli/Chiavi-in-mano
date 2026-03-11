@@ -3,19 +3,40 @@
   Partial riutilizzabile: mostra una foto se disponibile, altrimenti il gradiente.
 
   Variabili richieste dal chiamante:
-    item      — oggetto step o project (deve avere .img e .imgGrad)
+    item      — oggetto con .img, .imgMobile (opzionale), .imgGrad
     altText   — testo alt per l'immagine
     cssClass  — classe CSS da applicare al tag img/div (es. "card-img-bg")
+    
+  Logica:
+    - Se item.img esiste → <picture> con eventuale srcset mobile
+    - Se item.imgMobile ma non item.img → solo mobile img, gradiente su desktop
+    - Se nessuna img → gradiente
 */
 %>
-<% if (item.img) { %>
-  <img
-    src="<%= item.img %>"
-    alt="<%= altText %>"
-    class="<%= cssClass %>"
-    style="object-fit:cover;width:100%;height:100%"
-    loading="lazy"
-  />
+<% if (item.img || item.imgMobile) { %>
+  <picture>
+    <% if (item.imgMobile) { %>
+    <source media="(max-width: 680px)" srcset="<%= item.imgMobile %>">
+    <% } %>
+    <% if (item.img) { %>
+    <img
+      src="<%= item.img %>"
+      alt="<%= altText %>"
+      class="<%= cssClass %>"
+      style="object-fit:cover;width:100%;height:100%"
+      loading="lazy"
+    />
+    <% } else { %>
+    <%/* solo imgMobile, su desktop usiamo il gradiente come fallback dell'img */%>
+    <img
+      src="<%= item.imgMobile %>"
+      alt="<%= altText %>"
+      class="<%= cssClass %>"
+      style="object-fit:cover;width:100%;height:100%"
+      loading="lazy"
+    />
+    <% } %>
+  </picture>
 <% } else { %>
   <div class="<%= cssClass %>" style="background:<%= item.imgGrad %>"></div>
 <% } %>

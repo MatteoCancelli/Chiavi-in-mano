@@ -889,7 +889,7 @@ footer {
 
 /* ─── CAROSELLO ─────────────────────────────────────────────────────── */
 .carousel-section {
-  margin: 60px 0 0;
+  margin: 16px 0 0;
 }
 .carousel-label {
   display: flex; align-items: center; justify-content: space-between;
@@ -948,7 +948,7 @@ footer {
 }
 
 @media (max-width: 680px) {
-  .carousel-section { padding: 0; margin-top: 40px; }
+  .carousel-section { padding: 0; margin-top: 16px; }
   .carousel-label { padding: 0 20px; margin-bottom: 14px; }
   .carousel-wrap { aspect-ratio: 2/3; border-radius: 0; box-shadow: none; }
 }
@@ -1206,3 +1206,13 @@ footer {
   margin-bottom: 28px;
 }
 .body-text--last { margin-bottom: 64px; }
+
+/* ─── CAROUSEL IMG VARIANTS ─────────────────────────────────────────── */
+/* solo mobile: nasconde la foto su desktop, mostra il gradiente */
+.carousel-img--mobile-only { display: none; }
+.carousel-img--grad        { display: block; }
+
+@media (max-width: 680px) {
+  .carousel-img--mobile-only { display: block; }
+  .carousel-img--grad        { display: none; }
+}

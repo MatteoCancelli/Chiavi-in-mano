@@ -61,10 +61,10 @@ const partners = [
 
 // Carosello showroom ingresso (4 foto "Powered by Florim")
 const showroomCarousel = [
-  { img: null, imgGrad: "linear-gradient(145deg,#3a3a4a 0%,#52526a 30%,#6e7a8a 55%,#8fa5b5 100%)", caption: "Ingresso showroom" },
-  { img: null, imgGrad: "linear-gradient(135deg,#8b7355 0%,#a08060 35%,#c4a882 60%,#d4c5a9 100%)", caption: "Area cucina" },
-  { img: null, imgGrad: "linear-gradient(140deg,#a08060 0%,#b89878 30%,#d0b898 55%,#e0cdb0 100%)", caption: "Area gres porcellanato" },
-  { img: null, imgGrad: "linear-gradient(130deg,#e0ece8 0%,#c8ddd8 30%,#a8c8c0 55%,#88b0a8 100%)", caption: "Area ..." }
+  { img: null, imgMobile: null, imgGrad: "linear-gradient(145deg,#3a3a4a 0%,#52526a 30%,#6e7a8a 55%,#8fa5b5 100%)", caption: "Ingresso showroom" },
+  { img: null, imgMobile: "/img/showroom/carousel/mobile/a.webp", imgGrad: "linear-gradient(135deg,#8b7355 0%,#a08060 35%,#c4a882 60%,#d4c5a9 100%)", caption: "Area cucina" },
+  { img: null, imgMobile: null, imgGrad: "linear-gradient(140deg,#a08060 0%,#b89878 30%,#d0b898 55%,#e0cdb0 100%)", caption: "Area gres porcellanato" },
+  { img: null, imgMobile: null, imgGrad: "linear-gradient(130deg,#e0ece8 0%,#c8ddd8 30%,#a8c8c0 55%,#88b0a8 100%)", caption: "Area ..." }
 ];
 
 module.exports = { partners, showroomCarousel };

@@ -19,8 +19,19 @@
     <div class="carousel-track" id="carouselTrack">
       <% showroomCarousel.forEach(function(slide, i) { %>
       <div class="carousel-slide">
-        <% if (slide.img) { %>
+        <% if (slide.img && slide.imgMobile) { %>
+          <%/* entrambe: desktop orizzontale, mobile verticale */%>
+          <picture>
+            <source media="(max-width: 680px)" srcset="<%= slide.imgMobile %>">
+            <img src="<%= slide.img %>" alt="<%= slide.caption %>" class="carousel-img" loading="<%= i === 0 ? 'eager' : 'lazy' %>"/>
+          </picture>
+        <% } else if (slide.img) { %>
+          <%/* solo desktop */%>
           <img src="<%= slide.img %>" alt="<%= slide.caption %>" class="carousel-img" loading="<%= i === 0 ? 'eager' : 'lazy' %>"/>
+        <% } else if (slide.imgMobile) { %>
+          <%/* solo mobile: foto su mobile, gradiente su desktop */%>
+          <img src="<%= slide.imgMobile %>" alt="<%= slide.caption %>" class="carousel-img carousel-img--mobile-only" loading="<%= i === 0 ? 'eager' : 'lazy' %>"/>
+          <div class="carousel-img carousel-img--grad" style="background:<%= slide.imgGrad %>"></div>
         <% } else { %>
           <div class="carousel-img" style="background:<%= slide.imgGrad %>"></div>
         <% } %>
@@ -141,7 +152,7 @@
     <div class="orari-table">
       <div class="orari-row">
         <span class="orari-day">Lunedì – Venerdì</span>
-        <span class="orari-time">08:30 – 12:30 &nbsp;/&nbsp; 14:30 – 18:30</span>
+        <span class="orari-time">08:30 – 12:30 &nbsp;/&nbsp; 14:00 – 18:00</span>
       </div>
       <div class="orari-row">
         <span class="orari-day">Sabato</span>
