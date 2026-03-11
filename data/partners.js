@@ -59,7 +59,7 @@ const partners = [
   }
 ];
 
-// Carosello showroom ingresso (4 foto "Powered by Florian")
+// Carosello showroom ingresso (4 foto "Powered by Florim")
 const showroomCarousel = [
   { img: null, imgGrad: "linear-gradient(145deg,#3a3a4a 0%,#52526a 30%,#6e7a8a 55%,#8fa5b5 100%)", caption: "Ingresso showroom" },
   { img: null, imgGrad: "linear-gradient(135deg,#8b7355 0%,#a08060 35%,#c4a882 60%,#d4c5a9 100%)", caption: "Area cucina" },
