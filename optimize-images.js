@@ -19,6 +19,7 @@
 const sharp  = require('sharp');
 const fs     = require('fs');
 const path   = require('path');
+const heicConvert = require('heic-convert');
 
 // ── CONFIGURAZIONE ────────────────────────────────────────────────────────────
 
@@ -41,9 +42,18 @@ const PROFILES = {
   }
 };
 
-const EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp'];
+const EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp', '.heic'];
 
 // ── FUNZIONI ──────────────────────────────────────────────────────────────────
+
+async function toBuffer(inputPath) {
+  const ext = path.extname(inputPath).toLowerCase();
+  if (ext === '.heic') {
+    const input = fs.readFileSync(inputPath);
+    return await heicConvert({ buffer: input, format: 'JPEG', quality: 1 });
+  }
+  return inputPath; // per gli altri formati sharp accetta il path direttamente
+}
 
 async function processImage(inputPath, outputDir, baseName) {
   for (const [profileName, profile] of Object.entries(PROFILES)) {
@@ -61,7 +71,8 @@ async function processImage(inputPath, outputDir, baseName) {
     }
 
     try {
-      const info = await sharp(inputPath)
+      const src = await toBuffer(inputPath);
+      const info = await sharp(src)
         .rotate()                          // rispetta l'EXIF orientation (fondamentale per foto iPhone)
         .resize({
           width:  profile.width,
@@ -98,6 +109,7 @@ async function walkDir(dir) {
     // Salta già ottimizzate (@card, @mobile ecc.) e file non immagine
     if (!EXTENSIONS.includes(ext))       continue;
     if (base.includes('@'))              continue;
+    if (ext === '.webp')                 continue;
 
     console.log(`\n📷 ${path.relative(INPUT_DIR, fullPath)}`);
     await processImage(fullPath, dir, base);
